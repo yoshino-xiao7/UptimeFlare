@@ -54,6 +54,16 @@ const workerConfig: WorkerConfig = {
     //   //checkLocationWorkerRoute: 'https://xxx.example.com',
     // },
     {
+      id: 'uptimekuma',
+      name: 'UptimeKuma',
+      method: 'HEAD',
+      target: 'https://acofork-uptime.zeabur.app/status/acofork',
+      statusPageLink: 'https://acofork-uptime.zeabur.app/status/acofork',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
+    {
       id: 'blog',
       name: '博客总入口（自动分流）',
       method: 'HEAD',
