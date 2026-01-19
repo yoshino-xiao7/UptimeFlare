@@ -5,17 +5,16 @@ import { pageConfig } from '@/uptime.config'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-// 玻璃卡片样式
+// 透明玻璃卡片样式
 const glassCardStyle: React.CSSProperties = {
-  background: 'rgba(255, 255, 255, 0.7)',
-  backdropFilter: 'blur(10px)',
-  WebkitBackdropFilter: 'blur(10px)',
-  borderRadius: '16px',
-  border: '1px solid rgba(255, 255, 255, 0.3)',
-  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-  padding: '16px',
-  marginBottom: '16px',
-  transition: 'all 0.3s ease',
+  background: 'rgba(255, 255, 255, 0.15)',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
+  borderRadius: '12px',
+  border: '1px solid rgba(255, 255, 255, 0.25)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  padding: '12px 16px',
+  marginBottom: '12px',
 }
 
 // 暗色模式下的玻璃卡片样式
@@ -93,15 +92,15 @@ export default function MonitorList({
         onChange={(values) => setExpandedGroups(values)}
         styles={{
           item: {
-            background: 'rgba(255, 255, 255, 0.7)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-            borderRadius: '16px',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            marginBottom: '16px',
+            background: 'rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.25)',
+            marginBottom: '12px',
           },
           control: {
-            borderRadius: '16px',
+            borderRadius: '12px',
           },
           panel: {
             padding: '8px',
@@ -155,10 +154,9 @@ export default function MonitorList({
   return (
     <Center>
       <Box
-        ml="md"
-        mr="md"
+        px="sm"
         mt="xl"
-        style={{ width: '865px', maxWidth: '100%' }}
+        style={{ width: '100%', maxWidth: '865px' }}
       >
         {content}
       </Box>
