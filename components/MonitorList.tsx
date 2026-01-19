@@ -61,14 +61,26 @@ export default function MonitorList({
   const groupedMonitor = group && Object.keys(group).length > 0
   let content
 
-  // Load expanded groups from localStorage
-  const savedExpandedGroups = localStorage.getItem('expandedGroups')
-  const expandedInitial = savedExpandedGroups
-    ? JSON.parse(savedExpandedGroups)
-    : Object.keys(group || {})
-  const [expandedGroups, setExpandedGroups] = useState<string[]>(expandedInitial)
+  // Load expanded groups from localStorage (SSR 兼容)
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(Object.keys(group || {}))
+
   useEffect(() => {
-    localStorage.setItem('expandedGroups', JSON.stringify(expandedGroups))
+    if (typeof window !== 'undefined') {
+      const savedExpandedGroups = localStorage.getItem('expandedGroups')
+      if (savedExpandedGroups) {
+        try {
+          setExpandedGroups(JSON.parse(savedExpandedGroups))
+        } catch (e) {
+          // ignore parse error
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('expandedGroups', JSON.stringify(expandedGroups))
+    }
   }, [expandedGroups])
 
   // 单个监控卡片组件
