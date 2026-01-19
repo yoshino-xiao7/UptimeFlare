@@ -11,16 +11,13 @@ import MonitorDetail from '@/components/MonitorDetail'
 import Footer from '@/components/Footer'
 import { useTranslation } from 'react-i18next'
 import { CompactedMonitorStateWrapper, getFromStore } from '@/worker/src/store'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
 export const runtime = 'experimental-edge'
 const inter = Inter({ subsets: ['latin'] })
 
-// 静默刷新间隔（毫秒）
-const REFRESH_INTERVAL = 60000
-
 export default function Home({
-  compactedStateStr: initialStateStr,
+  compactedStateStr,
   monitors,
 }: {
   compactedStateStr: string
@@ -29,58 +26,16 @@ export default function Home({
   statusPageLink?: string
 }) {
   const { t } = useTranslation('common')
-  const [compactedStateStr, setCompactedStateStr] = useState(initialStateStr)
-  const [isRefreshing, setIsRefreshing] = useState(false)
   const [monitorId, setMonitorId] = useState<string>('')
 
   let state = new CompactedMonitorStateWrapper(compactedStateStr).uncompact()
 
-  // 客户端获取 hash
+  // 客户端获取 hash（SSR 兼容）
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setMonitorId(window.location.hash.substring(1))
     }
   }, [])
-
-  // 静默刷新函数
-  const silentRefresh = useCallback(async () => {
-    if (typeof window === 'undefined') return
-    try {
-      setIsRefreshing(true)
-      const response = await fetch('/api/data')
-      if (response.ok) {
-        // 获取完整状态需要重新请求页面数据
-        const pageResponse = await fetch(window.location.href, {
-          headers: { 'Accept': 'text/html' }
-        })
-        if (pageResponse.ok) {
-          // 使用 Next.js 的软刷新
-          const html = await pageResponse.text()
-          const match = html.match(/__NEXT_DATA__.*?>(.*?)<\/script>/)
-          if (match) {
-            try {
-              const nextData = JSON.parse(match[1])
-              if (nextData.props?.pageProps?.compactedStateStr) {
-                setCompactedStateStr(nextData.props.pageProps.compactedStateStr)
-              }
-            } catch (e) {
-              console.log('Silent refresh: parse error')
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.log('Silent refresh failed:', error)
-    } finally {
-      setIsRefreshing(false)
-    }
-  }, [])
-
-  // 设置定时刷新
-  useEffect(() => {
-    const interval = setInterval(silentRefresh, REFRESH_INTERVAL)
-    return () => clearInterval(interval)
-  }, [silentRefresh])
 
   // Specify monitorId in URL hash to view a specific monitor (can be used in iframe)
   if (monitorId) {
@@ -110,7 +65,7 @@ export default function Home({
             <Text fw={700}>{t('Monitor State not defined')}</Text>
           </Center>
         ) : (
-          <div style={{ transition: 'opacity 0.3s ease', opacity: isRefreshing ? 0.8 : 1 }}>
+          <div>
             <OverallStatus state={state} monitors={monitors} maintenances={maintenances} />
             <MonitorList monitors={monitors} state={state} />
           </div>
@@ -142,5 +97,3 @@ export async function getServerSideProps() {
 
   return { props: { compactedStateStr, monitors } }
 }
-
-
