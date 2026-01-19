@@ -1,9 +1,29 @@
 import { MonitorState, MonitorTarget } from '@/types/config'
-import { Accordion, Card, Center, Text } from '@mantine/core'
+import { Accordion, Card, Center, Text, Box } from '@mantine/core'
 import MonitorDetail from './MonitorDetail'
 import { pageConfig } from '@/uptime.config'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+// 玻璃卡片样式
+const glassCardStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.7)',
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  borderRadius: '16px',
+  border: '1px solid rgba(255, 255, 255, 0.3)',
+  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+  padding: '16px',
+  marginBottom: '16px',
+  transition: 'all 0.3s ease',
+}
+
+// 暗色模式下的玻璃卡片样式
+const glassCardStyleDark: React.CSSProperties = {
+  ...glassCardStyle,
+  background: 'rgba(30, 30, 30, 0.7)',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+}
 
 function countDownCount(state: MonitorState, ids: string[]) {
   let downCount = 0
@@ -52,15 +72,41 @@ export default function MonitorList({
     localStorage.setItem('expandedGroups', JSON.stringify(expandedGroups))
   }, [expandedGroups])
 
+  // 单个监控卡片组件
+  const MonitorCard = ({ monitor }: { monitor: MonitorTarget }) => (
+    <Box
+      style={glassCardStyle}
+      className="glass-card"
+    >
+      <MonitorDetail monitor={monitor} state={state} />
+    </Box>
+  )
+
   if (groupedMonitor) {
     // Grouped monitors
     content = (
       <Accordion
         multiple
         defaultValue={Object.keys(group)}
-        variant="contained"
+        variant="separated"
         value={expandedGroups}
         onChange={(values) => setExpandedGroups(values)}
+        styles={{
+          item: {
+            background: 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            borderRadius: '16px',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            marginBottom: '16px',
+          },
+          control: {
+            borderRadius: '16px',
+          },
+          panel: {
+            padding: '8px',
+          }
+        }}
       >
         {Object.keys(group).map((groupName) => (
           <Accordion.Item key={groupName} value={groupName}>
@@ -92,11 +138,7 @@ export default function MonitorList({
                 .filter((monitor) => group[groupName].includes(monitor.id))
                 .sort((a, b) => group[groupName].indexOf(a.id) - group[groupName].indexOf(b.id))
                 .map((monitor) => (
-                  <div key={monitor.id}>
-                    <Card.Section ml="xs" mr="xs">
-                      <MonitorDetail monitor={monitor} state={state} />
-                    </Card.Section>
-                  </div>
+                  <MonitorCard key={monitor.id} monitor={monitor} />
                 ))}
             </Accordion.Panel>
           </Accordion.Item>
@@ -104,30 +146,22 @@ export default function MonitorList({
       </Accordion>
     )
   } else {
-    // Ungrouped monitors
+    // Ungrouped monitors - 每个监控一个独立卡片
     content = monitors.map((monitor) => (
-      <div key={monitor.id}>
-        <Card.Section ml="xs" mr="xs">
-          <MonitorDetail monitor={monitor} state={state} />
-        </Card.Section>
-      </div>
+      <MonitorCard key={monitor.id} monitor={monitor} />
     ))
   }
 
   return (
     <Center>
-      <Card
-        shadow="sm"
-        padding="lg"
-        radius="md"
+      <Box
         ml="md"
         mr="md"
         mt="xl"
-        withBorder={!groupedMonitor}
-        style={{ width: groupedMonitor ? '897px' : '865px' }}
+        style={{ width: '865px', maxWidth: '100%' }}
       >
         {content}
-      </Card>
+      </Box>
     </Center>
   )
 }
