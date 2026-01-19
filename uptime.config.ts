@@ -7,12 +7,14 @@ import { MaintenanceConfig, PageConfig, WorkerConfig } from './types/config'
 
 const pageConfig: PageConfig = {
   // Title for your status page
-  title: "AcoFork 的状态页",
+  title: "雪涼 的状态页",
   // Links shown at the header of your status page, could set `highlight` to `true`
   links: [
-    { link: 'https://github.com/afoim', label: 'GitHub' },
-    { link: 'https://blog.acofork.com/', label: '博客' },
+    { link: 'https://github.com/yoshino-xiao7', label: 'GitHub' },
+    { link: 'http://blog.yukiryou.icu/', label: '博客' },
   ],
+  // 使用自定义 logo
+  logo: '/logo.png',
 }
 
 const workerConfig: WorkerConfig = {
@@ -53,163 +55,236 @@ const workerConfig: WorkerConfig = {
     //   // 设置此值之前请参考文档 https://github.com/lyc8503/UptimeFlare/wiki/Geo-specific-checks-setup
     //   //checkLocationWorkerRoute: 'https://xxx.example.com',
     // },
-    {
-      id: 'uptimekuma',
-      name: 'UptimeKuma',
-      method: 'HEAD',
-      target: 'https://acofork-uptime.zeabur.app/status/acofork',
-      statusPageLink: 'https://acofork-uptime.zeabur.app/status/acofork',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
+    // ========== 雪涼的监控 ==========
     {
       id: 'blog',
-      name: '博客总入口（自动分流）',
+      name: '博客',
       method: 'HEAD',
-      target: 'https://blog.acofork.com/',
-      statusPageLink: 'https://blog.acofork.com/',
+      target: 'https://blog.yukiryou.icu/',
+      statusPageLink: 'https://blog.yukiryou.icu/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'blog_eo',
-      name: '博客（EdgeOne Pages国内节点）',
+      id: 'xueliang_cloud',
+      name: '雪涼云 API',
       method: 'HEAD',
-      target: 'https://eo-blog.acofork.com/',
-      statusPageLink: 'https://eo-blog.acofork.com/',
+      target: 'https://cloud.yukiryou.icu/',
+      statusPageLink: 'https://cloud.yukiryou.icu/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'blog_cf',
-      name: '博客（Cloudflare Pages海外节点）',
+      id: 'pixiv_proxy_optimized',
+      name: 'Pixiv代理（全球优化线路）',
       method: 'HEAD',
-      target: 'https://cf-blog.acofork.com/',
-      statusPageLink: 'https://cf-blog.acofork.com/',
+      target: 'https://i.yukiryou.icu/',
+      statusPageLink: 'https://i.yukiryou.icu/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'umami_nas',
-      name: 'Umami（NAS）',
+      id: 'pixiv_proxy_default',
+      name: 'Pixiv代理（全球默认线路）',
       method: 'HEAD',
-      target: 'https://umami.acofork.com/',
-      statusPageLink: 'https://umami.acofork.com/',
+      target: 'https://i.yukiryou.top/',
+      statusPageLink: 'https://i.yukiryou.top/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'vw_nas',
-      name: 'VaultWarden（NAS）',
+      id: 'xueliang_api_backend',
+      name: '雪涼云 API 后端服务',
       method: 'HEAD',
-      target: 'https://vw.acofork.com/',
-      statusPageLink: 'https://vw.acofork.com/',
+      target: 'https://api.yukiryou.icu/',
+      statusPageLink: 'https://api.yukiryou.icu/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'pan_nas',
-      name: 'OpenList（NAS）',
+      id: 'edgeone_random_img',
+      name: 'EdgeOne 随机图',
       method: 'GET',
-      target: 'https://pan.acofork.com/',
-      statusPageLink: 'https://pan.acofork.com/',
+      target: 'https://img.yukiryou.icu/pic?img=ua',
+      statusPageLink: 'https://img.yukiryou.icu/pic?img=ua',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
     {
-      id: 'fnos_nas',
-      name: '飞牛（NAS）',
+      id: 'download_proxy',
+      name: '代理下载服务',
       method: 'HEAD',
-      target: 'https://nas.acofork.com/',
-      statusPageLink: 'https://nas.acofork.com/',
+      target: 'https://download.yukiryou.top/',
+      statusPageLink: 'https://download.yukiryou.top/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
     },
-    {
-      id: 'gh_proxy_eo',
-      name: 'Github 代理（EdgeOne）',
-      method: 'HEAD',
-      target: 'https://gh.072103.xyz/',
-      statusPageLink: 'https://gh.072103.xyz/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'gh_proxy_cf',
-      name: 'Github 代理（Cloudflare）',
-      method: 'HEAD',
-      target: 'https://cf-gh.072103.xyz/',
-      statusPageLink: 'https://cf-gh.072103.xyz/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'eopfapi',
-      name: '随机图API（EdgeOne）',
-      method: 'HEAD',
-      target: 'https://eopfapi.acofork.com/pic/',
-      statusPageLink: 'https://eopfapi.acofork.com/pic/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'eo_umami',
-      name: 'Umami（EdgeOne Pages）',
-      method: 'HEAD',
-      target: 'https://eo-umami.acofork.com/',
-      statusPageLink: 'https://eo-umami.acofork.com/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'upload_to_s3',
-      name: '简单上传文件到S3（EdgeOne Pages）',
-      method: 'GET',
-      target: 'https://u.2x.nz/',
-      statusPageLink: 'https://u.2x.nz/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'onedrive_index',
-      name: 'OneDrive 公开只读（Vercel）',
-      method: 'HEAD',
-      target: 'https://e3.2x.nz/',
-      statusPageLink: 'https://e3.2x.nz/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'eo_http',
-      name: '网站安全测试（EdgeOne Pages）',
-      method: 'HEAD',
-      target: 'https://http.acofork.com/',
-      statusPageLink: 'https://http.acofork.com/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
-      id: 'yxvm_ssh',
-      name: 'YxVM SSH',
-      method: 'TCP_PING',
-      target: '46.232.60.28:22',
-      timeout: 5000,
-    }
+
+    // ========== 以下是 AcoFork 的原监控（已注释） ==========
+    // {
+    //   id: 'uptimekuma',
+    //   name: 'UptimeKuma',
+    //   method: 'HEAD',
+    //   target: 'https://acofork-uptime.zeabur.app/status/acofork',
+    //   statusPageLink: 'https://acofork-uptime.zeabur.app/status/acofork',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'blog',
+    //   name: '博客总入口（自动分流）',
+    //   method: 'HEAD',
+    //   target: 'https://blog.acofork.com/',
+    //   statusPageLink: 'https://blog.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'blog_eo',
+    //   name: '博客（EdgeOne Pages国内节点）',
+    //   method: 'HEAD',
+    //   target: 'https://eo-blog.acofork.com/',
+    //   statusPageLink: 'https://eo-blog.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'blog_cf',
+    //   name: '博客（Cloudflare Pages海外节点）',
+    //   method: 'HEAD',
+    //   target: 'https://cf-blog.acofork.com/',
+    //   statusPageLink: 'https://cf-blog.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'umami_nas',
+    //   name: 'Umami（NAS）',
+    //   method: 'HEAD',
+    //   target: 'https://umami.acofork.com/',
+    //   statusPageLink: 'https://umami.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'vw_nas',
+    //   name: 'VaultWarden（NAS）',
+    //   method: 'HEAD',
+    //   target: 'https://vw.acofork.com/',
+    //   statusPageLink: 'https://vw.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'pan_nas',
+    //   name: 'OpenList（NAS）',
+    //   method: 'GET',
+    //   target: 'https://pan.acofork.com/',
+    //   statusPageLink: 'https://pan.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'fnos_nas',
+    //   name: '飞牛（NAS）',
+    //   method: 'HEAD',
+    //   target: 'https://nas.acofork.com/',
+    //   statusPageLink: 'https://nas.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'gh_proxy_eo',
+    //   name: 'Github 代理（EdgeOne）',
+    //   method: 'HEAD',
+    //   target: 'https://gh.072103.xyz/',
+    //   statusPageLink: 'https://gh.072103.xyz/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'gh_proxy_cf',
+    //   name: 'Github 代理（Cloudflare）',
+    //   method: 'HEAD',
+    //   target: 'https://cf-gh.072103.xyz/',
+    //   statusPageLink: 'https://cf-gh.072103.xyz/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'eopfapi',
+    //   name: '随机图API（EdgeOne）',
+    //   method: 'HEAD',
+    //   target: 'https://eopfapi.acofork.com/pic/',
+    //   statusPageLink: 'https://eopfapi.acofork.com/pic/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'eo_umami',
+    //   name: 'Umami（EdgeOne Pages）',
+    //   method: 'HEAD',
+    //   target: 'https://eo-umami.acofork.com/',
+    //   statusPageLink: 'https://eo-umami.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'upload_to_s3',
+    //   name: '简单上传文件到S3（EdgeOne Pages）',
+    //   method: 'GET',
+    //   target: 'https://u.2x.nz/',
+    //   statusPageLink: 'https://u.2x.nz/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'onedrive_index',
+    //   name: 'OneDrive 公开只读（Vercel）',
+    //   method: 'HEAD',
+    //   target: 'https://e3.2x.nz/',
+    //   statusPageLink: 'https://e3.2x.nz/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'eo_http',
+    //   name: '网站安全测试（EdgeOne Pages）',
+    //   method: 'HEAD',
+    //   target: 'https://http.acofork.com/',
+    //   statusPageLink: 'https://http.acofork.com/',
+    //   hideLatencyChart: false,
+    //   expectedCodes: [200],
+    //   timeout: 10000,
+    // },
+    // {
+    //   id: 'yxvm_ssh',
+    //   name: 'YxVM SSH',
+    //   method: 'TCP_PING',
+    //   target: '46.232.60.28:22',
+    //   timeout: 5000,
+    // }
   ],
   notification: {
     // [Optional] Notification webhook settings, if not specified, no notification will be sent
@@ -221,8 +296,8 @@ const workerConfig: WorkerConfig = {
       method: 'POST',
       // [Optional] headers to be sent
       headers: {
-         'Authorization': 'Bearer ${env.RESEND_API_KEY}',
-         'Content-Type': 'application/json'
+        'Authorization': 'Bearer ${env.RESEND_API_KEY}',
+        'Content-Type': 'application/json'
       },
       // [Required] Specify how to encode the payload
       // Should be one of 'param', 'json' or 'x-www-form-urlencoded'
@@ -234,7 +309,7 @@ const workerConfig: WorkerConfig = {
       // $MSG will be replaced with the human-readable notification message
       payload: {
         "from": "系统状态更新 <uptimeflare@update.2x.nz>",
-        "to": ["acofork@foxmail.com"],
+        "to": ["ccc360448@gmail.com"],
         "subject": "UptimeFlare 状态更新",
         "text": "$MSG"
       },
@@ -262,7 +337,7 @@ const workerConfig: WorkerConfig = {
 
       // 注意：已在 webhook 中配置了 Resend 基础通知
       // 如果需要发送 HTML 邮件，请保留以下代码；如果只需简单文本通知，可以注释掉以下代码以避免重复通知。
-      
+
       // 调用 Resend API 发送邮件通知 (高级 HTML 格式)
       // 务必在 Cloudflare Worker 的设置 -> 变量中配置: RESEND_API_KEY
       /* 
@@ -313,7 +388,7 @@ const workerConfig: WorkerConfig = {
         }
       }
       */
-      
+
       // 这不会遵循宽限期设置，并且在状态变化时立即调用
       // 如果您想实现宽限期，需要手动处理
     },
@@ -341,19 +416,19 @@ const maintenances: MaintenanceConfig[] = []
 
 // const maintenances: MaintenanceConfig[] = [
 //   {
-    // // [Optional] Monitor IDs to be affected by this maintenance
-    // monitors: ['foo_monitor', 'bar_monitor'],
-    // // [Optional] default to "Scheduled Maintenance" if not specified
-    // title: 'Test Maintenance',
-    // // Description of the maintenance, will be shown at status page
-    // body: 'This is a test maintenance, server software upgrade',
-    // // Start time of the maintenance, in UNIX timestamp or ISO 8601 format
-    // start: '2020-01-01T00:00:00+08:00',
-    // // [Optional] end time of the maintenance, in UNIX timestamp or ISO 8601 format
-    // // if not specified, the maintenance will be considered as on-going
-    // end: '2050-01-01T00:00:00+08:00',
-    // // [Optional] color of the maintenance alert at status page, default to "yellow"
-    // color: 'blue',
+// // [Optional] Monitor IDs to be affected by this maintenance
+// monitors: ['foo_monitor', 'bar_monitor'],
+// // [Optional] default to "Scheduled Maintenance" if not specified
+// title: 'Test Maintenance',
+// // Description of the maintenance, will be shown at status page
+// body: 'This is a test maintenance, server software upgrade',
+// // Start time of the maintenance, in UNIX timestamp or ISO 8601 format
+// start: '2020-01-01T00:00:00+08:00',
+// // [Optional] end time of the maintenance, in UNIX timestamp or ISO 8601 format
+// // if not specified, the maintenance will be considered as on-going
+// end: '2050-01-01T00:00:00+08:00',
+// // [Optional] color of the maintenance alert at status page, default to "yellow"
+// color: 'blue',
 //   },
 // ]
 
