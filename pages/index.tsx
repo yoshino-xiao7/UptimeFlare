@@ -31,11 +31,20 @@ export default function Home({
   const { t } = useTranslation('common')
   const [compactedStateStr, setCompactedStateStr] = useState(initialStateStr)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [monitorId, setMonitorId] = useState<string>('')
 
   let state = new CompactedMonitorStateWrapper(compactedStateStr).uncompact()
 
+  // 客户端获取 hash
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setMonitorId(window.location.hash.substring(1))
+    }
+  }, [])
+
   // 静默刷新函数
   const silentRefresh = useCallback(async () => {
+    if (typeof window === 'undefined') return
     try {
       setIsRefreshing(true)
       const response = await fetch('/api/data')
@@ -74,7 +83,6 @@ export default function Home({
   }, [silentRefresh])
 
   // Specify monitorId in URL hash to view a specific monitor (can be used in iframe)
-  const monitorId = window.location.hash.substring(1)
   if (monitorId) {
     const monitor = monitors.find((monitor) => monitor.id === monitorId)
     if (!monitor || !state) {
@@ -134,4 +142,5 @@ export async function getServerSideProps() {
 
   return { props: { compactedStateStr, monitors } }
 }
+
 
