@@ -15,6 +15,10 @@ export const runtime = 'experimental-edge'
 const inter = Inter({ subsets: ['latin'] })
 
 function getSelectedMonth() {
+  if (typeof window === 'undefined') {
+    const now = new Date()
+    return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0')
+  }
   const hash = window.location.hash.replace('#', '')
   if (!hash) {
     const now = new Date()

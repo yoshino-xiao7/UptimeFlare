@@ -3,9 +3,19 @@ import classes from '@/styles/Header.module.css'
 import { pageConfig } from '@/uptime.config'
 import { PageConfigLink } from '@/types/config'
 import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 
 export default function Header({ style }: { style?: React.CSSProperties }) {
   const { t } = useTranslation('common')
+  const [isHomePage, setIsHomePage] = useState(true)
+
+  // SSR 兼容：在客户端获取 pathname
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsHomePage(window.location.pathname === '/')
+    }
+  }, [])
+
   const linkToElement = (link: PageConfigLink, i: number) => {
     return (
       <a
@@ -27,8 +37,8 @@ export default function Header({ style }: { style?: React.CSSProperties }) {
       <Container size="md" className={classes.inner}>
         <Group gap="sm">
           <a
-            href={location.pathname == '/' ? 'https://github.com/lyc8503/UptimeFlare' : '/'}
-            target={location.pathname == '/' ? '_blank' : undefined}
+            href={isHomePage ? 'https://github.com/lyc8503/UptimeFlare' : '/'}
+            target={isHomePage ? '_blank' : undefined}
           >
             <Image
               src={pageConfig.logo ?? '/logo.svg'}
