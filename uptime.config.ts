@@ -126,6 +126,26 @@ const workerConfig: WorkerConfig = {
       expectedCodes: [200],
       timeout: 10000,
     },
+    {
+      id: 'short_link_frontend',
+      name: '短链服务前端',
+      method: 'HEAD',
+      target: 'https://dl.yukiryou.icu/',
+      statusPageLink: 'https://dl.yukiryou.icu/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
+    {
+      id: 'short_link_backend',
+      name: '短链服务后端',
+      method: 'HEAD',
+      target: 'https://ki1.mom/',
+      statusPageLink: 'https://ki1.mom/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
 
     // ========== 以下是 AcoFork 的原监控（已注释） ==========
     // {
