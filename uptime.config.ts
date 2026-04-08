@@ -146,6 +146,26 @@ const workerConfig: WorkerConfig = {
       expectedCodes: [200],
       timeout: 10000,
     },
+    {
+      id: 'endfield_frontend',
+      name: '明日方舟：终末地 API 管理前端',
+      method: 'HEAD',
+      target: 'https://endfield.suzuki.ink/',
+      statusPageLink: 'https://endfield.suzuki.ink/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
+    {
+      id: 'endfield_api_backend',
+      name: '明日方舟：终末地 API 后端',
+      method: 'HEAD',
+      target: 'https://api.suzuki.ink/',
+      statusPageLink: 'https://api.suzuki.ink/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
 
     // ========== 以下是 AcoFork 的原监控（已注释） ==========
     // {
