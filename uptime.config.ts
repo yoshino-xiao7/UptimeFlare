@@ -117,16 +117,6 @@ const workerConfig: WorkerConfig = {
       timeout: 10000,
     },
     {
-      id: 'download_proxy',
-      name: '代理下载服务',
-      method: 'HEAD',
-      target: 'https://download.yukiryou.top/',
-      statusPageLink: 'https://download.yukiryou.top/',
-      hideLatencyChart: false,
-      expectedCodes: [200],
-      timeout: 10000,
-    },
-    {
       id: 'short_link_frontend',
       name: '短链服务前端',
       method: 'HEAD',
